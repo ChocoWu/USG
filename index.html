@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="description"
+          content="Universal Scene Graph Generation">
+    <meta name="keywords" content="Universal Scene Graph Generation">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>USG</title>
+
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+
+        gtag('js', new Date());
+
+        gtag('config', 'G-PYVRSFMDRL');
+    </script>
+
+    <link href="https://fonts.cdnfonts.com/css/caveat" rel="stylesheet">
+
+    <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+          rel="stylesheet">
+    <link rel="icon" href="./static/images/logo.png">
+    <link rel="stylesheet" href="./static/css/bulma.min.css">
+<!--    <link rel="stylesheet" href="bulma-carousel.min.css">-->
+    <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+    <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+    <link rel="stylesheet" href="./static/css/index.css">
+
+    <link rel="stylesheet" href="./static/css/index-gradio.css">
+    <link rel="stylesheet" href="./static/css/live_theme.css">
+
+    <style>
+        @import url('https://fonts.cdnfonts.com/css/caveat');
+    </style>
+
+<!--    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>-->
+    <script defer src="./static/js/fontawesome.all.min.js"></script>
+<!--    <script src="./static/js/bulma-carousel.min.js"></script>-->
+<!--    <script src="./static/js/bulma-slider.min.js"></script>-->
+    <script src="./static/js/index.js"></script>
+    <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+    </script>
+    <!-- <script type="text/iavascript" src="http://cdn.mathjax.org/mathiax/latest/MathJax.js?config=AM_HTMLOrMML-fu11"></script> -->
+
+<!--    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"-->
+<!--          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">-->
+</head>
+<body>
+
+
+<section class="hero">
+    <div class="hero-body">
+        <div class="container is-max-desktop">
+            <div class="columns is-centered">
+                <div class="column has-text-centered">
+                    <!-- <h1 class="title is-1 publication-title" -->
+                        <!-- style="display: flex;flex-direction: row;align-items: center;justify-content: center;margin-bottom: 5px;"><img -->
+                            <!-- src="./static/images/logo.png" width="60" height="60" style="margin-right: 25px;margin-bottom: 6px;"></h1> -->
+                    <h1 class="title is-2 publication-title">Universal Scene Graph Generation</h1>
+<!--                     <h1 class="title is-2 publication-title" style="margin-top: -25px">Understanding, Generating, Segmenting, Editing</h1> -->
+                    <div class="is-size-5 publication-authors">
+            <span class="author-block">
+                <a href="https://chocowu.github.io/">Shengqiong Wu</a></span> &nbsp;
+                        <span class="author-block">
+                <a href="https://haofei.vip/">Hao Fei</a> </span> &nbsp;
+                        <span class="author-block">
+              <a href="https://www.chuatatseng.com/">Tat-Seng Chua</a></span> &nbsp;
+                        <span class="author-block">
+            </span>
+                    </div>
+
+                    <div class="is-size-5 publication-authors" style="margin-top: 10px;">
+                        <span class="author-block"><b style="color:#f68946; font-weight:normal">▶ </b>National University of Singapore</span> &nbsp;
+                    </div>
+
+                    <!-- <div class="is-size-5 publication-authors">
+                        <span class="author-block" style="font-size: 15px;">(<sup>*</sup>Correspondence)</span>
+                    </div> -->
+
+                    <div class="column has-text-centered">
+                        <div class="publication-links">
+                            <!-- PDF Link. -->
+                            <span class="link-block">
+                                <a href="https://xxx" class="external-link button is-normal is-rounded is-dark">
+                                <span class="icon">
+                                    <i class="fas fa-file-pdf"></i>
+                                </span>
+                                <span>Paper</span>
+                            </a>
+                        </span>
+
+                <!-- <span class="link-block">
+                    <a href="xxx" target="_blank" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                        <i class="fa fa-laugh"></i>
+                    </span>
+                    <span>Demo</span>
+                    </a>
+                </span> -->
+                
+                <!-- Video Link. -->
+                <!-- <span class="link-block">
+                    <a href="xxx" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                        <i class="fab fa-youtube"></i>
+                    </span>
+                    <span>Video</span>
+                    </a>
+                </span> -->
+
+
+                <!-- Code Link. -->
+                <span class="link-block">
+                    <a href="https://github.com/ChocoWu/USG"
+                    class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                        <i class="fab fa-github"></i>
+                    </span>
+                    <span>Code</span>
+                    </a>
+                </span>
+                </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<section class="section">
+    <div class="container is-max-desktop">
+        <div class="columns is-centered has-text-centered">
+            <div class="column is-full-width">
+                <h2 class="title is-2">Abstract</h2>
+                <div class="content has-text-justified">
+                    <p>
+                        Scene graph (SG) representations can neatly and efficiently describe scene semantics, which has driven sustained intensive research in SG generation.
+                        In the real world, multiple modalities often coexist, with different types, such as images, text, video, and 3D data, expressing distinct characteristics.
+                        Unfortunately, current SG research is largely confined to single-modality scene modeling, preventing the full utilization of the complementary strengths of different modality SG representations in depicting holistic scene semantics.
+                        To this end, we introduce Universal SG (USG), a novel representation capable of fully characterizing comprehensive semantic scenes from any given combination of modality inputs, encompassing modality-invariant and modality-specific scenes, as shown in <a href="#fig1">Fig. 1</a>.
+                        Further, we tailor a niche-targeting USG parser, USG-Par, which effectively addresses two key bottlenecks of cross-modal object alignment and out-of-domain challenges.
+                        We design the USG-Par with modular architecture for end-to-end USG generation, in which we devise an object associator to relieve the modality gap for cross-modal object alignment.
+                        Further, we propose a text-centric scene contrasting learning mechanism to mitigate domain imbalances by aligning multimodal objects and relations with textual SGs. 
+                        Through extensive experiments, we demonstrate that USG offers a stronger capability for expressing scene semantics than standalone SGs, and also that our USG-Par achieves higher efficacy and performance.
+                    </p>
+                </div>
+                <div class="content has-text-justified" id="fig1">
+                    <img class="columns is-centered has-text-centered" src="./static/images/full-usg3-crop.png" alt="Teaser" width="100%"
+                         style="margin:0 auto">
+                    <!-- <iframe class="columns is-centered has-text-centered" src="example.pdf" width="100%" style="margin:0 auto"></iframe> -->
+                    <br>
+                    <figcaption>
+                        <p style="text-align: left;">
+                            <font color="061E61">
+                                <b>Figure 1: </b>Illustrations of SGs (top) of single modalities in text, image, video, and 3D, and our proposed Universal SG (bottom).
+                                Note that the USG instance shown here is under the combination of four complete modalities, while practically any modality can be absent freely.
+                            </font>
+                        </p>
+                    </figcaption>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+<section class="section">
+    <div class="container is-max-desktop">
+        <div class="columns is-centered has-text-centered">
+            <div class="column is-full-width">
+                <h2 class="title is-2">USG Definition</h2>
+                <div class="content has-text-justified">
+                    <p>
+                        Here, we provide a detailed description of the nodes and edges in the <em><b>USG</b></em>.
+                        The <em><b>USG</b></em> is formally represented as $$ \mathcal{G}^{\mathcal{U}} = \{\mathcal{O}, \mathcal{R}\}, \text{where} \;\; \mathcal{O} = \{\mathcal{O}^{*}\}, * \in \{\mathcal{I}, \mathcal{V}, \mathcal{D}, \mathcal{S} \} $$ represents the set of objects across all modalities. 
+                        Each node involves a category label \( c_i^o \in \mathbb{C}^{\mathcal{O}} \) and a segmentation mask \( m_i \). 
+                        For instance, as illustrated in <a href="#fig2">Fig. 2</a> the objects node set \(\mathcal{O}\) in the <em><b>USG</b></em> comprises of textual objects node set  \( \mathcal{O}^{\mathcal{S}}\) in the TSG and visual objects node set \(\mathcal{O}^{\mathcal{I}}\) in the <em>ISG</em>. 
+                        $$ \mathcal{R} = \{\mathcal{R}^{*}, \mathcal{R}^{* \times \diamond}\} , *, \diamond \in \{\mathcal{I}, \mathcal{V}, \mathcal{D}, \mathcal{S} \} \;\; \text{and} \;\; * \ne \diamond $$ \( \mathcal{R}^{*} \) includes both intra-modality relationships and inter-modality associations \(\mathcal{R}^{* \times \diamond}\).
+                        We define the existence of inter-modality associations between objects from different modalities if they correspond to the same underlying object described in distinct modalities.
+                        For example, as shown in <a href="#fig2">Fig. 2</a>, the textual object <em>Peter</em> in the TSG should correspond to the visual object <em>person</em> in the <em>ISG</em>. 
+                        Similarly, as depicted in <a href="#fig3">Fig. 3</a>  the <em>sofa</em> in the 3DSG aligns with the <em>sofa</em> in the <em>ISG</em>.
+                        When inter-modality associations exist, the corresponding objects are merged into a unified node, as shown in <a href="#fig2">Fig. 2</a>, with the example of the <em>headphones</em>
+                        This merged node represents the object across multiple modalities, retaining a single category label. 
+                        Typically, the object name from the textual modality is prioritized for its flexibility and precision in description. 
+                        Similarly, the relation predicate is preferentially adopted from the TSG, as it often provides a more descriptive and accurate representation. 
+                        For instance, in <a href="#fig2">Fig. 2</a>, the relationship between <em>Peter</em> and <em>sofa</em> in the <em><b>USG</b></em> is <em>relax on</em> derived from the TSG, rather than <em>lying</em> which might be less descriptive.
+                        Despite merging nodes, the segmentation masks from all modalities are preserved. This ensures that each modality's unique contribution to the object's representation is maintained within the USG.
+
+                        In addition, to parse the USG for scenes derived from video and other modalities, we first establish association relations between nodes from other modalities and the objects in each frame of the VSG. 
+                        For instance, as illustrated in <a href="#fig4">Fig. 4</a> the objects <em>Peter</em>, <em>sofa</em> and <em>iPhone</em> from the TSG are associated with the objects in every frame of the <em>VSG</em>.
+                        To ensure the USG comprehensively represents the scene described by the video and other modalities, the scene from the other modalities is added as the first frame in the <em><b>USG</b></em>. 
+                        The remaining frames correspond to the frame-level scene graph representations from the VSG. 
+                        This paradigm advances in integrating multimodal information much more seamlessly, enriching the holistic representation of the scene within the <em><b>USG</b></em> framework.
+                    </p>
+                </div>
+                <div class="content has-text-justified">
+                    <div class="columns is-centered has-text-centered" style="display: flex; justify-content: center; gap: 20px;">
+                        <figure style="text-align: center;" id="fig2">
+                            <img class="columns is-centered has-text-centered" src="./static/images/T-I-USG.png" alt="T-I-USG" width="100%"
+                                style="display: block; margin:0 auto">
+                            <br>
+                            <figcaption>
+                                <p style="text-align: left;">
+                                    <font color="061E61">
+                                        <b>Figure 2:</b> Illustration of USG generated from text and image scenes. 
+                                    </font>
+                                </p>
+                            </figcaption>
+                        </figure>
+                        <figure style="text-align: center;" id="fig3">
+                            <img class="columns is-centered has-text-centered" src="./static/images/T-3D-USG.png" alt="T-3D-USG" width="100%"
+                                style="display: block; margin:0 auto">
+                            <br>
+                            <figcaption>
+                                <p style="text-align: left;">
+                                    <font color="061E61">
+                                        <b>Figure 3:</b> Illustration of USG generated from text and 3D scenes. 
+                                    </font>
+                                </p>
+                            </figcaption>
+                        </figure>
+                    </div>  
+                </div>
+                <div class="content has-text-justified" id="fig4">
+                    <img class="columns is-centered has-text-centered" src="./static/images/T-V-USG.png" alt="T-V-USG" width="75%"
+                         style="margin:0 auto">
+                    <!-- <iframe class="columns is-centered has-text-centered" src="example.pdf" width="100%" style="margin:0 auto"></iframe> -->
+                    <br>
+                    <figcaption>
+                        <p style="text-align: center;">
+                            <font color="061E61">
+                                <b>Figure 4: </b>Illustration of USG generated from text and video scenes.
+                            </font>
+                        </p>
+                    </figcaption>
+                </div>
+
+                <div class="content has-text-justified" id="fig5">
+                    <img class="columns is-centered has-text-centered" src="./static/images/T-I-3D-USG.png" alt="T-I-3D-USG" width="75%"
+                         style="margin:0 auto">
+                    <!-- <iframe class="columns is-centered has-text-centered" src="example.pdf" width="100%" style="margin:0 auto"></iframe> -->
+                    <br>
+                    <figcaption>
+                        <p style="text-align: center;">
+                            <font color="061E61">
+                                <b>Figure 5: </b>Illustration of USG generated from text, image and 3D scenes.
+                            </font>
+                        </p>
+                    </figcaption>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+<section class="section">
+    <div class="container is-max-desktop">
+        <div class="columns is-centered has-text-centered">
+            <div class="column is-full-width">
+                <h2 class="title is-2">Method</h2>
+                <div class="content has-text-justified">
+                    <p>
+                        Our model consists of five main modules, as shown in <a href="#fig6">Fig. 6</a> <br>.
+                        <ul>
+                            <li><b>First</b>, we first extract the modality-specific features with a modality-specific backbone. </li>
+                            <li><b>Second</b>, we employ a shared mask decoder to extract object queries for various modalities. These object queries are then fed into the modality-specific object detection head to obtain the category label and tracked positions of the corresponding objects.</li>
+                            <li><b>Third</b>, the object queries are input into the object associator, which determines the association relationships between objects across modalities.</li>
+                            <li><b>Fourth</b>, a relation proposal constructor is utilized to retrieve the most confidential subject-object pairs. </li>
+                            <li><b>Finally</b>, a relation decoder is employed to decode the final predicate prediction between the subjects and objects.</li>
+                        </ul>
+                    </p>
+                </div>
+                <div class="content has-text-justified" id="fig6">
+                    <img class="columns is-centered has-text-centered" src="./static/images/frame4-cropped.png" alt="framework" width="100%"
+                         style="margin:0 auto">
+                    <!-- <iframe class="columns is-centered has-text-centered" src="./static/images/frame4-cropped.png" width="100%" height="100%" style="margin:0 auto" alt="Teaser" ></iframe> -->
+                    <br>
+                    <figcaption>
+                        <p style="text-align: left;">
+                            <font color="061E61">
+                                <b>Figure 6:</b> Overview of USG-Par architecture.
+                                It mainly consists of five modules, including modality-specific encoders, shared mask decoder, object associator, relation proposal constructor, and relation decoder. 
+                                
+                            
+                            </font>
+                        </p>
+                    </figcaption>
+                </div>
+                <div class="content has-text-justified">
+                    <div class="columns is-centered has-text-centered" style="display: flex; justify-content: center; gap: 20px;">
+                        <figure style="text-align: center;" id="fig7">
+                            <img class="columns is-centered has-text-centered" src="./static/images/obj-ass4.png" alt="object associator" width="100%"
+                                style="display: block; margin:0 auto">
+                            <br>
+                            <figcaption>
+                                <p style="text-align: center;">
+                                    <font color="061E61">
+                                        <b>Figure 7:</b> Illustration of the object associator for establishing associations between different modalities. 
+                                    </font>
+                                </p>
+                            </figcaption>
+                        </figure>
+                        <figure style="text-align: center;" id="fig8">
+                            <img class="columns is-centered has-text-centered" src="./static/images/learning1.png" alt="learning" width="100%"
+                                style="display: block; margin:0 auto">
+                            <br>
+                            <figcaption>
+                                <p style="text-align: center;">
+                                    <font color="061E61">
+                                        <b>Figure 8:</b> Illustration of the object-level and relation-level text-centric scene contrasting learning mechanism. 
+                                    </font>
+                                </p>
+                            </figcaption>
+                        </figure>
+                    </div>  
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Training -->
+        <div class="columns is-centered">
+            <div class="column is-full-width">
+                <h2 class="title is-3">Training</h2>
+
+                <div class="content has-text-justified">
+                    <p>
+                        This section elaborates on the training objectives and strategies to optimize our system.
+                    <ul>
+                        <li>
+                            <b>Object Detection Loss.</b>
+                            During training, we first apply Hungarian matching between the predicted and ground-truth entity masks to assign object queries to entities in text, video, image, and 3D modalities.
+                            This assignment is then used to supervise the mask predictions and category label classifications.
+
+                        </li>
+                        <li>
+                            <b>Object Association Loss.</b>
+                            To optimize the object associator, we take the ground-truth association matrix, which is a binary matrix, as the supervised signal.
+                        </li>
+                        <li>
+                            <b>Relation Classification Loss.</b>
+                            For relation predicate classification, we employ a sigmoid CE loss for the predicate classification, similar to object category classification.
+                        </li>
+                        <li>
+                            <b>Text-centric Scene Contrastive Learning.</b>
+                            A text-centric scene contrastive learning approach aligns other modalities with text data, attributed with two key advantages: <b>1)</b> TSG data encompass the most diverse and general domain, and <b>2)</b> binding information from other modalities into text effectively addresses the scarcity of USG data for certain modality combinations. 
+                        </li>
+                    </ul>
+                    </p>
+                </div>
+                <br/>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<section class="section">
+    <div class="container is-max-desktop">
+
+        <div class="columns is-centered has-text-centered">
+            <h2 class="title is-2">Quantitative Analysis</h2>
+            <br>
+        </div>
+
+        <div class="content has-text-justified">
+            <div class="columns is-centered has-text-centered" style="display: flex; justify-content: center; gap: 20px;">
+                <figure style="text-align: center;" id="fig7">
+                    <img class="columns is-centered has-text-centered" src="./static/images/PSG.png" alt="PSG" width="100%"
+                        style="display: block; margin:0 auto">
+                    <br>
+                    <figcaption>
+                        <p style="text-align: center;">
+                            <font color="061E61">
+                                <b>Table 1:</b> Evaluation on the PSG under the SGDet task.
+                            </font>
+                        </p>
+                    </figcaption>
+                </figure>
+                <figure style="text-align: center;" id="fig8">
+                    <img class="columns is-centered has-text-centered" src="./static/images/3DDSG.png" alt="3DDSG" width="100%"
+                        style="display: block; margin:0 auto">
+                    <br>
+                    <figcaption>
+                        <p style="text-align: center;">
+                            <font color="061E61">
+                                <b>Table 2:</b> Evaluation results on the 3DDSG dataset. 
+                            </font>
+                        </p>
+                    </figcaption>
+                </figure>
+            </div>  
+        </div>
+
+        <div class="content has-text-justified">
+            <div class="columns is-centered has-text-centered" style="display: flex; justify-content: center; gap: 20px;">
+                <figure style="text-align: center;" id="fig7">
+                    <img class="columns is-centered has-text-centered" src="./static/images/PVSG.png" alt="PVSG" width="100%"
+                        style="display: block; margin:0 auto">
+                    <br>
+                    <figcaption>
+                        <p style="text-align: center;">
+                            <font color="061E61">
+                                <b>Table 3:</b> Evaluation on the PVSG dataset.
+                            </font>
+                        </p>
+                    </figcaption>
+                </figure>
+                <figure style="text-align: center;" id="fig8">
+                    <img class="columns is-centered has-text-centered" src="./static/images/TSG.png" alt="TSG" width="100%"
+                        style="display: block; margin:0 auto">
+                    <br>
+                    <figcaption>
+                        <p style="text-align: center;">
+                            <font color="061E61">
+                                <b>Table 4:</b> Performance on the FACTUAL dataset. 
+                            </font>
+                        </p>
+                    </figcaption>
+                </figure>
+            </div>  
+        </div>
+
+    </div>
+</section>
+
+
+
+<section class="section" id="BibTeX">
+    <div class="container is-max-desktop content">
+        <h2 class="title">BibTeX</h2>
+        <pre><code>@inproceedings{wu2025usg,
+    title={Universal Scene Graph Generation},
+    author={Wu, Shengqiong and Fei, Hao and Chua, Tat-Seng},
+    booktitle={CVPR},
+    year={2025}
+}
+</code></pre>
+    </div>
+</section>
+
+
+<footer class="footer">
+    <div class="container">
+        <div class="columns is-centered">
+            <div class="column is-8">
+                <div class="content">
+                    <p style="text-align: center;">
+                        The webpage is built based on <a href="https://next-gpt.github.io/">NExT-GPT</a>.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+</body>
+</html>
