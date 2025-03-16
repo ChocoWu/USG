@@ -3,7 +3,7 @@
 
 
 
-This is the repository that contains the source code for the [USG-Par project page](https://chocowu.github.io/USG-Par-web/).
+This is the repository that contains the source code for the [USG-Par project page](https://chocowu.github.io/USG).
 
 
 If you use SeTok in your project, please kindly cite:
