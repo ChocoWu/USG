@@ -1,17 +1,18 @@
-# USG-Par
+# USG
 ## Universal Scene Graph Generation
 
 
 
-This is the repository that contains the source code for the [USG-Par project page](https://chocowu.github.io/USG).
+This is the repository that contains the source code for the [USG project page](https://chocowu.github.io/USG).
 
 
-If you use SeTok in your project, please kindly cite:
+If you use USG in your project, please kindly cite:
 ```
 @article{wu2025usgpar,
   title={Universal Scene Graph Generation},
   author={Wu, Shengqiong and Fei, Hao and Chua, Tat-Seng},
-  year={2025}
+  year={2025},
+  booktitle={CVPR}
 }
 ```
 
