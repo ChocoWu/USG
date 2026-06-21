@@ -1,0 +1,39 @@
+# 3DDSG (3DSSG-on-3RScan) point-cloud scene-graph config.
+dataset:
+  name: 3ddsg
+  rscan_root: data/3DSG/3RScan
+  ssg_root: data/3DSG/3DSSG
+  split:
+    train: data/3DSG/split/train_scans.txt
+    val: data/3DSG/split/validation_scans.txt
+    test: data/3DSG/split/test_scans.txt
+  num_points: 4096                   # subsampled input points
+
+model:
+  dim: 256
+  num_queries: 100
+  num_scales: 3
+  mask_decoder_layers: 9
+  rpc_layers: 4
+  relation_layers: 6
+  top_k: 100
+  point_pretrained: checkpoints/point_bert/PointTransformer_ModelNet8192points.pth
+  point_in_dim: 3                    # xyz-only -> loads the full pretrained encoder
+  point_freeze_encoder: false
+
+train:
+  modality: point
+  batch_size: 2
+  epochs: 50
+  lr: 1.0e-4
+  weight_decay: 1.0e-4
+  warmup_steps: 1000
+  grad_clip: 0.1
+  num_workers: 4
+  device: auto
+  log_every: 50
+  ckpt_dir: checkpoints/3ddsg
+
+loss:
+  alpha: 1.0
+  gamma: 0.8

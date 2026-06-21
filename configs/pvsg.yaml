@@ -1,0 +1,34 @@
+# PVSG (Panoptic Video Scene Graph) .
+# Per-frame VSG: T frames per video are folded into the batch and run through the image pipeline; temporal encoder (F_temp) wiring is a later refinement.
+dataset:
+  name: pvsg
+  ann: data/pvsg/pvsg.json
+  data_root: data/pvsg                # <SourceDir>/masks/<vid>/<frame>.png, videos/<vid>.mp4
+  num_frames: 8                       
+  mask_size: [80, 80]
+
+model:
+  dim: 256
+  num_queries: 100
+  num_scales: 3
+  mask_decoder_layers: 9
+  rpc_layers: 4
+  relation_layers: 6
+  top_k: 100
+
+train:
+  modality: video                     # fed natively (B,T,3,H,W) so F_temp links frames
+  batch_size: 2                       # videos per batch (effective frames = batch_size * num_frames)
+  epochs: 50
+  lr: 1.0e-4
+  weight_decay: 1.0e-4
+  warmup_steps: 1000
+  grad_clip: 0.1
+  num_workers: 4
+  device: auto
+  log_every: 50
+  ckpt_dir: checkpoints/pvsg
+
+loss:
+  alpha: 1.0
+  gamma: 0.8

@@ -1,0 +1,32 @@
+# PSG (Panoptic Scene Graph).
+dataset:
+  name: psg
+  ann: data/psg/psg.json
+  image_root: data/psg/coco        # extract coco.zip here (train2017/, panoptic_train2017/)
+  mask_size: [80, 80]              # GT mask resolution = pred mask_features (stride-4 of 320)
+
+model:
+  dim: 256
+  num_queries: 100                 # N_q per modality
+  num_scales: 3
+  mask_decoder_layers: 9           # L_mask
+  rpc_layers: 4                    # L_RPC
+  relation_layers: 6               # L_rel
+  top_k: 100                       # RPC top-k pairs
+
+train:
+  modality: image
+  batch_size: 8
+  epochs: 50
+  lr: 1.0e-4                        
+  weight_decay: 1.0e-4
+  warmup_steps: 1000               # linear warmup
+  grad_clip: 0.1
+  num_workers: 4
+  device: auto                     # auto -> cuda/mps/cpu
+  log_every: 50
+  ckpt_dir: checkpoints/psg
+
+loss:
+  alpha: 1.0                        # L_obj
+  gamma: 0.8                        # L_rel

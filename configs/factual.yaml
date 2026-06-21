@@ -1,0 +1,36 @@
+# FACTUAL text scene-graph parsing config.
+dataset:
+  name: factual
+  split_kind: random                 # random | length (the two FACTUAL splits)
+  train_csv: data/FACTUAL/factual_sg/random/train.csv
+  dev_csv: data/FACTUAL/factual_sg/random/dev.csv
+  test_csv: data/FACTUAL/factual_sg/random/test.csv
+
+model:
+  dim: 256
+  num_queries: 100
+  num_scales: 3
+  mask_decoder_layers: 9
+  rpc_layers: 4
+  relation_layers: 6
+  top_k: 100
+
+train:
+  modality: text
+  batch_size: 16
+  epochs: 30
+  lr: 1.0e-4
+  weight_decay: 1.0e-4
+  warmup_steps: 1000
+  grad_clip: 0.1
+  num_workers: 4
+  device: auto
+  log_every: 50
+  ckpt_dir: checkpoints/factual
+
+loss:
+  alpha: 1.0
+  gamma: 0.8
+
+eval:
+  pred_score_thr: 0.5                 # predicate prob threshold for a predicted triplet

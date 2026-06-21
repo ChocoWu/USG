@@ -1,0 +1,56 @@
+# Two-stage joint training (paper-style domain-balanced joint training).
+#   Stage 1: interleave the 4 single-modality datasets over the UNION vocab.
+#   Stage 2: load the stage-1 checkpoint, train on the 4 multimodal pairs.
+# Single-dataset training (configs/{psg,pvsg,3ddsg,factual}.yaml) is unchanged.
+
+model:
+  dim: 256
+  num_queries: 100
+  num_scales: 3
+  mask_decoder_layers: 9
+  rpc_layers: 4
+  relation_layers: 6
+  top_k: 100
+  point_pretrained: checkpoints/point_bert/PointTransformer_ModelNet8192points.pth
+  point_in_dim: 3
+
+train:
+  lr: 1.0e-4
+  weight_decay: 1.0e-4
+  warmup_steps: 1000
+  grad_clip: 0.1
+  device: auto
+  num_workers: 0
+  temperature: 2.0                  # interleave temperature sampling (domain balancing)
+  log_every: 50
+
+stage1:
+  steps: 100000
+  ckpt: checkpoints/joint/stage1.pt
+  datasets:                         # modality -> dataset spec (batch_size per modality)
+    image:  {name: psg,     ann: data/psg/psg.json, image_root: data/psg/coco, split: train, mask_size: [80, 80], batch_size: 8}
+    video:  {name: pvsg,    ann: data/pvsg/pvsg.json, data_root: data/pvsg, split: train, num_frames: 8, mask_size: [80, 80], batch_size: 2}
+    text:   {name: factual, train_csv: data/FACTUAL/factual_sg/random/train.csv, batch_size: 16}
+    point:  {name: 3ddsg,   rscan_root: data/3DSG/3RScan, ssg_root: data/3DSG/3DSSG, split: data/3DSG/split/train_scans.txt, num_points: 4096, batch_size: 2}
+
+stage2:
+  steps: 50000
+  ckpt: checkpoints/joint/stage2.pt
+  pairs:                            # pair -> recipe + base modality (whose vocab to remap with)
+    iv: {recipe: data/multimodal/I-V/iv_pairs_train.json, base: video, batch_size: 1}
+    id: {recipe: data/multimodal/I-D/id_pairs_train.json, base: point, batch_size: 2}
+    si: {recipe: data/multimodal/S-I/si_pairs_train.json, base: image, batch_size: 4}
+    sd: {recipe: data/multimodal/S-D/sd_pairs_train.json, base: point, batch_size: 2}
+
+eval:
+  limit: 200                        # max samples per split (null = full)
+  single:                           # test/val splits per single modality
+    image: {name: psg,     ann: data/psg/psg.json, image_root: data/psg/coco, split: test, mask_size: [80, 80], metric: recall}
+    video: {name: pvsg,    ann: data/pvsg/pvsg.json, data_root: data/pvsg, split: val, num_frames: 8, mask_size: [80, 80], metric: recall}
+    text:  {name: factual, test_csv: data/FACTUAL/factual_sg/random/test.csv, train_csv: data/FACTUAL/factual_sg/random/train.csv, metric: setmatch}
+    point: {name: 3ddsg,   rscan_root: data/3DSG/3RScan, ssg_root: data/3DSG/3DSSG, split: data/3DSG/split/validation_scans.txt, num_points: 4096, metric: recall}
+  pairs:                            # AssocAcc on the pair val splits
+    iv: {recipe: data/multimodal/I-V/iv_pairs_val.json, base: video}
+    id: {recipe: data/multimodal/I-D/id_pairs_val.json, base: point}
+    si: {recipe: data/multimodal/S-I/si_pairs_test.json, base: image, split: test}
+    sd: {recipe: data/multimodal/S-D/sd_pairs_val.json, base: point}
