@@ -23,7 +23,7 @@ class RPCOutput:
                                     rows = subjects, cols = objects; supervises L_pair.
         q_sub, q_obj:    (B, k, d)  refined subject/object queries of selected pairs.
         e_sub, e_obj:    (B, k, d)  initial projector embeddings of selected pairs
-                                    (residual term E_sub/E_obj used in eq. 9).
+                                    (residual term E_sub/E_obj).
         sub_idx, obj_idx:(B, k)     object-query indices of the selected pairs.
         scores:          (B, k)     confidence of the selected pairs.
     """
