@@ -128,18 +128,6 @@ The loaders derive cross-modal association targets on the fly:
 - 3D-to-2D visibility projection for I-D.
 - Category-level text-to-visual matching for S-I and S-D.
 
-## Rebuilding Recipes
-
-The recipe builders are:
-
-```bash
-python tools/build_si_pairs.py
-python tools/build_iv_pairs.py
-python tools/build_id_pairs.py
-python tools/build_sd_pairs.py
-```
-
-Before rebuilding, make sure the source datasets are prepared under `data/PSG/`, `data/PVSG/`, and `data/3DSG/`. If your local source directories use different capitalization or symlinks, update the constants at the top of the corresponding builder script.
 
 ## Text Parsing Dependency
 
