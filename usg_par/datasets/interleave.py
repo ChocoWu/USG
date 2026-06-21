@@ -1,7 +1,7 @@
 """Interleaved multi-dataset iterator for joint training.
 
 Yields ``(key, batch)`` for a fixed number of steps, picking which dataset to draw
-from by **temperature sampling** (weight ∝ size**(1/T), paper T≈2 to avoid the largest
+from by **temperature sampling** (weight ∝ size**(1/T), T≈2 to avoid the largest
 dataset dominating — "domain balancing"). Each underlying DataLoader is cycled when
 exhausted.
 """

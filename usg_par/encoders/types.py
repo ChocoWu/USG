@@ -12,9 +12,9 @@ class EncodedModality:
 
     feats_per_scale: list of (B, Li, d) flattened features, one per mask-decoder scale.
                      Visual: 3 spatial scales (coarse->fine). Text/point: H repeated
-                     across scales (paper: "H_S across different scales").
+                     across scales ("H_S across different scales").
     context_tokens:  (B, Lc, d) compact contextualized feature H̄ for the relation
-                     decoder context H (eq. 19).
+                     decoder context H.
     feat_sizes:      [(Hi, Wi)...] spatial sizes for masked attention, or None
                      (text / point placeholder -> non-masked cross-attention).
     mask_features:   (B, d, H, W) high-res per-pixel embedding H_3 for mask

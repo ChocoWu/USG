@@ -6,8 +6,7 @@ import torch
 def pairwise_cosine(x: torch.Tensor, y: torch.Tensor, eps: float = 1e-8) -> torch.Tensor:
     """Cosine similarity between every row of ``x`` and every row of ``y``.
 
-    Implements the ``cos(·, ·)`` in paper eq. (7): pairwise cosine similarity between
-    two sets of queries.
+    Pairwise cosine similarity between two sets of queries.
 
     Args:
         x: ``(..., N, d)`` one set of vectors.

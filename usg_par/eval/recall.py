@@ -1,12 +1,8 @@
 """Recall@K and mean Recall@K for scene graph detection.
 
-A predicted triplet (sub_label, predicate, obj_label) with subject/object masks is a
-hit for a GT triplet iff the three labels match AND both subject and object mask IoUs
-exceed a threshold (default 0.5). 
-Each GT triplet may be matched at most once; greedy
-matching in descending predicted-score order. 
-R@K uses the top-K predicted triplets;
-mR@K averages per-predicate recall.
+A predicted triplet (sub_label, predicate, obj_label) with subject/object masks is a hit for a GT triplet iff the three labels match AND both subject and object mask IoUs exceed a threshold (default 0.5). 
+Each GT triplet may be matched at most once; greedy matching in descending predicted-score order. 
+R@K uses the top-K predicted triplets; mR@K averages per-predicate recall.
 """
 
 from dataclasses import dataclass

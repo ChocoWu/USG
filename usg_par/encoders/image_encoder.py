@@ -38,7 +38,7 @@ class VisualFeatures:
     feat_sizes:      list of (Hi, Wi) per scale.
     mask_features:   (B, d, H, W) highest-resolution per-pixel embedding H_3.
     context_tokens:  (B, Lc, d) compact contextualized feature H̄ for the
-                     relation-decoder context (eq. 19); the coarsest scale.
+                     relation-decoder context; the coarsest scale.
     """
 
     feats_per_scale: List[torch.Tensor]

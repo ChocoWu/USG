@@ -1,4 +1,4 @@
-"""Modality-specific encoders (Step 1, paper §3.1)."""
+"""Modality-specific encoders."""
 
 from .builders import DEFAULT_PRETRAINED, build_openclip, get_tokenizer
 from .image_encoder import ImageEncoder, PixelDecoder, VisualFeatures

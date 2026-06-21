@@ -66,7 +66,7 @@ class USGParCore(nn.Module):
         )
         # shared mask decoder (weights shared across modalities)
         self.mask_decoder = SharedMaskDecoder(dim, mask_decoder_layers, num_scales)
-        # temporal encoder F_temp (video): links object queries across frames (§3.2)
+        # temporal encoder F_temp (video): links object queries across frames
         self.temporal_encoder = TemporalEncoder(dim)
         # modality-specific detection heads
         self.det_heads = nn.ModuleDict({m: ObjectDetectionHead(dim) for m in modalities})
@@ -90,7 +90,7 @@ class USGParCore(nn.Module):
         return refined, mask_logits
 
     def _build_context(self, feats: Dict[str, EncodedModality]):
-        """Concatenate per-modality context tokens for the relation decoder (eq. 19)."""
+        """Concatenate per-modality context tokens for the relation decoder."""
         ctx_list, mask_list = [], []
         any_mask = False
         for m in feats:
@@ -122,7 +122,7 @@ class USGParCore(nn.Module):
         for m, feat in feats.items():
             mb = feat.feats_per_scale[0].size(0)            # encoder batch (B*T for video)
             refined[m], mask_logits[m] = self._run_mask_decoder(m, feat, mb)
-            # temporal encoder F_temp: link object queries across video frames (§3.2)
+            # temporal encoder F_temp: link object queries across video frames
             t = feat.num_frames
             if t and t > 1:
                 bt, n, d = refined[m].shape
@@ -142,7 +142,7 @@ class USGParCore(nn.Module):
             assoc_logits[key] = logits
             out.associations[key] = logits
 
-        # 3) shared relation context H (eq. 19)
+        # 3) shared relation context H
         context_h, context_kpm = self._build_context(feats)
 
         # 4) per-modality detection + relation

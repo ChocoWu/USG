@@ -39,12 +39,11 @@ class RPCOutput:
 
 
 class TwoWayRACLayer(nn.Module):
-    """One two-way relation-aware cross-attention layer (Fig. 14).
+    """One two-way relation-aware cross-attention layer.
 
     Two parallel streams (subject, object). Within a layer both cross-attentions
-    read the *previous-layer* states (per eq. 8/17), then each stream runs
-    self-attention and an FFN. Post-norm residual blocks, matching the
-    "Add & Norm" boxes in Fig. 14.
+    read the *previous-layer* states, then each stream runs self-attention and an
+    FFN. Post-norm residual blocks.
     """
 
     def __init__(self, dim: int, num_heads: int = 8, ffn_dim: int = 2048, dropout: float = 0.0):
@@ -113,7 +112,7 @@ class RelationProposalConstructor(nn.Module):
     def __init__(
         self,
         dim: int = 256,
-        num_layers: int = 4,        # L_RPC = 4 (appendix E.2)
+        num_layers: int = 4,        # L_RPC = 4
         num_heads: int = 8,
         ffn_dim: int = 2048,
         top_k: int = 100,           # project default (see CLAUDE.md decisions)
@@ -139,7 +138,7 @@ class RelationProposalConstructor(nn.Module):
             raise ValueError("obj_queries should be (B, N, d)")
         k = top_k if top_k is not None else self.top_k
 
-        # 1) subject / object projectors -> E_sub, E_obj (eq. X^sub_0 = E_sub, X^obj_0 = E_obj)
+        # 1) subject / object projectors -> E_sub, E_obj (X^sub_0 = E_sub, X^obj_0 = E_obj)
         if self.use_proj:
             e_sub = self.sub_proj(obj_queries)
             e_obj = self.obj_proj(obj_queries)

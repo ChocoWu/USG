@@ -38,7 +38,7 @@ class MaskPredictor(nn.Module):
 
 
 def build_attn_mask(mask_logits: torch.Tensor, size: Tuple[int, int], num_heads: int) -> torch.Tensor:
-    """Binarize & resize the predicted mask into a masked-attention mask (eq. 16).
+    """Binarize & resize the predicted mask into a masked-attention mask.
 
     Args:
         mask_logits: (B, N, H, W) mask logits from the previous layer.
@@ -174,7 +174,7 @@ class SharedMaskDecoder(nn.Module):
 
 
 class TemporalEncoder(nn.Module):
-    """Transformer temporal encoder F_temp for video (appendix D.1 / CLAUDE.md: 2 layers).
+    """Transformer temporal encoder F_temp for video (2 layers).
 
     Models temporal relationships between objects across frames: for each object slot,
     attend across the T frames.

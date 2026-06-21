@@ -99,7 +99,7 @@ class HungarianMatcher:
 
 
 # =========================================================================== #
-# Object detection loss (eq. 11)
+# Object detection loss
 # =========================================================================== #
 @dataclass
 class DetectionLossWeights:
@@ -196,7 +196,7 @@ def pair_loss(pair_confidence: torch.Tensor, gt_pairs: torch.Tensor,
 
 
 # =========================================================================== #
-# Relation classification loss (eq. 12)
+# Relation classification loss
 # =========================================================================== #
 def predicate_loss(pred_logits: torch.Tensor, target_multihot: torch.Tensor) -> torch.Tensor:
     """Sigmoid CE for predicate classification (L^r_cls). pred_logits (B,k,P)."""
@@ -212,7 +212,7 @@ def relation_loss(pred_logits, target_multihot, pair_confidence, gt_pairs,
 
 
 # =========================================================================== #
-# Text-centric scene contrastive loss (eq. 13)
+# Text-centric scene contrastive loss
 # =========================================================================== #
 def text_centric_contrastive_loss(
     text_emb: torch.Tensor,     # (Nt, d) text-modality queries (objects or relations)
@@ -224,8 +224,8 @@ def text_centric_contrastive_loss(
 
     For each text query with >=1 positive, each positive p gives
         -log( exp(s_ip) / (exp(s_ip) + Σ_{neg} exp(s_in)) ),
-    where negatives are the non-positive other-modality queries for that text query
-    (matching the denominator in eq. 13). Cosine similarity is used for stability.
+    where negatives are the non-positive other-modality queries for that text query.
+    Cosine similarity is used for stability.
     """
     if text_emb.numel() == 0 or other_emb.numel() == 0 or pos_mask.sum() == 0:
         return text_emb.new_zeros(())
@@ -256,7 +256,7 @@ def contrastive_loss_total(l_obj_cons: torch.Tensor, l_rel_cons: torch.Tensor) -
 
 
 # =========================================================================== #
-# Total loss (eq. 14)
+# Total loss
 # =========================================================================== #
 @dataclass
 class LossWeights:

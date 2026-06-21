@@ -9,7 +9,7 @@ from .ops import pairwise_cosine
 
 
 class CNNFilter(nn.Module):
-    """3-layer CNN, kernel 3×3 (paper §4 / E.2: "3-layer CNN with a kernel size of 3×3").
+    """3-layer CNN, kernel 3×3.
 
     Treats the association matrix as a single-channel 2D image ``(B, 1, N, M)``,
     leveraging local detail to filter out redundant noise, and outputs same-size
@@ -41,11 +41,11 @@ class ObjectAssociator(nn.Module):
     keeps it easy to unit-test and compose.
 
     Args:
-        dim: object query dimension (256 in the paper).
+        dim: object query dimension.
         filter_hidden: hidden channels of the CNN filter.
-        use_linear: enable the modality-specific linear projections (Table 7 "LN").
-            When off, cosine is computed on the raw queries (worst ablation in the paper).
-        use_filter: enable the CNN filter (Table 7 "Filter"). When off, returns the
+        use_linear: enable the modality-specific linear projections.
+            When off, cosine is computed on the raw queries.
+        use_filter: enable the CNN filter. When off, returns the
             bidirectional mean cosine directly.
     """
 

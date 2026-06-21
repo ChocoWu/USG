@@ -9,7 +9,7 @@ import torch.nn as nn
 class MLP(nn.Module):
     """A simple multi-layer perceptron with ReLU activations.
 
-    Used for the subject/object projectors (eq. in §3.5) and mask-embedding heads.
+    Used for the subject/object projectors and mask-embedding heads.
     """
 
     def __init__(

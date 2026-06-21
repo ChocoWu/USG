@@ -3,13 +3,6 @@
 Given the top-k subject/object pairs from the RPC, build relationship queries and
 decode the final predicate for each pair via a transformer that cross-attends to
 the contextualized multimodal features H.
-
-Key equations:
-  Q_rel = [Q_sub + E_sub ; Q_obj + E_obj]                                   
-  H     = [H_S ; H̄_I ; H̄_V ; H̄_D]   (only the present modalities)         
-  X^rel_l = F^rel_CA(X^rel_{l-1}, H, H)
-          = softmax(F_q(X^rel_{l-1})^T F_k(H)) F_v(H)                        
-
 """
 
 from typing import Optional, Tuple
@@ -28,7 +21,7 @@ def _ffn(dim: int, ffn_dim: int, dropout: float) -> nn.Sequential:
 
 
 class RelationDecoderLayer(nn.Module):
-    """One relation-decoder layer: cross-attn(H) -> self-attn -> FFN (Fig. 15, post-norm)."""
+    """One relation-decoder layer: cross-attn(H) -> self-attn -> FFN (post-norm)."""
 
     def __init__(self, dim: int, num_heads: int = 8, ffn_dim: int = 2048,
                  dropout: float = 0.0, use_cross_attn: bool = True):
@@ -44,7 +37,7 @@ class RelationDecoderLayer(nn.Module):
 
     def forward(self, x_rel: torch.Tensor, h: Optional[torch.Tensor],
                 h_key_padding_mask: Optional[torch.Tensor] = None) -> torch.Tensor:
-        # cross-attention to contextualized features H (eq. 10/20)
+        # cross-attention to contextualized features H
         if self.use_cross_attn:
             if h is None:
                 raise ValueError("use_cross_attn=True requires context features H")
@@ -65,7 +58,7 @@ class RelationDecoder(nn.Module):
         self,
         dim: int = 256,
         num_predicates: int = 56,   # dataset-specific; PSG has 56 (overridden per config)
-        num_layers: int = 6,        # L_rel = 6 (appendix E.2)
+        num_layers: int = 6,        # L_rel = 6
         num_heads: int = 8,
         ffn_dim: int = 2048,
         dropout: float = 0.0,
@@ -84,7 +77,7 @@ class RelationDecoder(nn.Module):
         self.classifier = nn.Linear(dim, num_predicates)
 
     def build_rel_queries(self, q_sub, e_sub, q_obj, e_obj) -> torch.Tensor:
-        """Construct relationship queries Q_rel (eq. 9). Inputs each (B, k, d)."""
+        """Construct relationship queries Q_rel. Inputs each (B, k, d)."""
         sub = q_sub + e_sub      # Q_sub + E_sub (residual with the initial embedding)
         obj = q_obj + e_obj      # Q_obj + E_obj
         if self.concat_pairs:
@@ -109,7 +102,7 @@ class RelationDecoder(nn.Module):
 
 
 def concat_context_features(feats):
-    """Concatenate per-modality contextualized features along the token dim (eq. 19).
+    """Concatenate per-modality contextualized features along the token dim.
 
     Args:
         feats: list of (B, L_i, d) tensors for the present modalities.

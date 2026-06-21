@@ -6,7 +6,7 @@ import os
 
 import open_clip
 
-# CLIP-ConvNeXt-L (paper §3.1 / E.2: image encoder is ConvNeXt-L).
+# CLIP-ConvNeXt-L image encoder.
 DEFAULT_MODEL = "convnext_large_d_320"
 DEFAULT_PRETRAINED = "laion2b_s29b_b131k_ft_soup"
 DEFAULT_CACHE = os.path.join("checkpoints", "openclip")
