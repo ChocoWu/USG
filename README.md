@@ -4,7 +4,11 @@
 ##### <div align="center"> <a href="https://chocowu.github.io/">Shengqiong Wu</a>, <a href="http://haofei.vip/">Hao Fei</a>*, and <a href="https://www.chuatatseng.com/">Tat-Seng Chua</a>. <div>
 ##### <div align="center"> (*Correspondence ) <div>
 
+<div align="center">
 
+[Paper (arXiv:2503.15005)](https://arxiv.org/abs/2503.15005) · [Project page](https://sqwu.top/USG/)
+
+</div>
 
 
 
@@ -27,8 +31,7 @@ Through extensive experiments, we demonstrate that USG offers a stronger capabil
 
 
 
-
-## Mehotd
+## Method
 Our model consists of five main modules.
 ***First***, we extract the modality-specific features with a modality-specific backbone. 
 ***Second***, we employ a shared mask decoder to extract object queries for various modalities. 
@@ -39,6 +42,18 @@ These object queries are then fed into the modality-specific object detection he
 
   ![framework](./static/images/frame4-cropped.png)
 
+The five modules map to the code as follows:
+
+| Paper module | Code |
+| --- | --- |
+| Modality-specific encoders | `usg_par/encoders/` (`text_encoder.py`, `image_encoder.py`, `point_encoder.py`) |
+| Shared mask decoder (+ `F_temp`) | `usg_par/mask_decoder.py` |
+| Object associator | `usg_par/associator.py` |
+| Detection head | `usg_par/detection_head.py` |
+| Relation proposal constructor | `usg_par/rpc.py` |
+| Relation decoder | `usg_par/relation_decoder.py` |
+| Losses `L_obj/L_ass/L_rel/L_cons` | `usg_par/losses.py`, `usg_par/training/` |
+| Assembly | `usg_par/model.py` (`USGParCore` + `USGPar`) |
 
 
 ## Data 
@@ -61,28 +76,116 @@ To evaluate the efficacy of USG-Par, which supports both single-modality and mul
   please refer to the corresponding instructions for dataset preparation.
 
 * Multi-modal Dataset
-  - Text-Image
-  
-    Inspired by [LLM4SGG](https://github.com/rlqja1107/torch-LLM4SGG), we leverage the three image caption datasets: [COCO caption](https://cocodataset.org/#download), [Conceptual (CC) caption](https://ai.google.com/research/ConceptualCaptions/) , and [VG](data/VG/README.md) caption to build the Text-Image pair-wise SG. 
 
-  - Text-Video 
-
-    To construct the text-video pairwise USG dataset, we select 400 videos from [ActivityNet](http://activity-net.org/), which includes dense caption annotations. 
-
-  - Text-3D 
-
-    To construct the text-3D pairwise USG dataset, we use the [ScanRefer](https://github.com/daveredrum/ScanRefer) dataset, which contains 46,173 descriptions of 724 object types across 800 [ScanNet](http://www.scan-net.org/) scenes. 
-
-  - Image-Video
-
-    To construct the image-video pairwise USG dataset, we utilize the existing [PVSG](data/PVSG/README.md) video dataset.
-
-  - Image-3D
-    To construct the Image-3D USG dataset, we leverage the existing [3DSG](data/3DSG/README.md) dataset. 
+  Cross-modal **pair recipes** and their construction (data sources, association
+  targets, code locations) are documented in
+  [`data/multimodal/README.md`](data/multimodal/README.md).
 
 
 ## Code
-Coming soon.
+
+### Environment Preparation
+
+```bash
+conda activate usg
+pip install torch torchvision numpy einops scipy pyyaml pytest tqdm \
+            open_clip_torch timm av plyfile matplotlib SceneGraphParser
+python -m spacy download en_core_web_sm       
+```
+
+
+
+### Download Checkpoint
+
+Pretrained weights are gitignored under `checkpoints/`:
+
+- **OpenCLIP** `convnext_large_d_320 / laion2b_s29b_b131k_ft_soup` → `checkpoints/openclip/`
+  (auto-downloaded by `usg_par/encoders/builders.py`, or place a local snapshot there).
+- **Point-BERT** `PointTransformer_ModelNet8192points.pth` → `checkpoints/point_bert/`.
+
+### Repository structure
+
+```
+usg_par/
+  encoders/        text / image / point encoders + pixel/point decoders
+  mask_decoder.py  shared Mask2Former decoder + temporal encoder
+  associator.py    object associator
+  detection_head.py modality-specific detection head
+  rpc.py           relation proposal constructor
+  relation_decoder.py relation decoder
+  losses.py        L_obj / L_ass / L_rel / L_cons + Hungarian matcher
+  model.py         USGParCore (encoder-agnostic) + USGPar (with encoders)
+  datasets/        PSG, PVSG, FACTUAL, 3DDSG + I-V/I-D/S-I/S-D pair datasets
+  training/        target construction + single/multi-modal loss assembly
+  eval/            Recall@K/mR@K, Set Match, Association Accuracy@K, triplet builders
+train.py, eval.py  single-dataset training / evaluation entry points
+train_joint.py, eval_joint.py  two-stage joint training / unified-model evaluation
+configs/           per-dataset YAML (psg, pvsg, 3ddsg, factual) + joint.yaml
+tools/             recipe builders, smoke runs, encoder/3D visualization checks
+```
+
+### Run the code
+
+#### Training
+
+Single-modality (config-driven; `dataset.name` + `train.modality` select the line):
+
+```bash
+conda activate usg
+CUDA_VISIBLE_DEVICES=0 python train.py --config configs/psg.yaml      # image
+CUDA_VISIBLE_DEVICES=0 python train.py --config configs/pvsg.yaml     # video (+F_temp)
+CUDA_VISIBLE_DEVICES=0 python train.py --config configs/3ddsg.yaml    # point cloud
+CUDA_VISIBLE_DEVICES=0 python train.py --config configs/factual.yaml  # text
+```
+
+Cross-modal training uses dedicated steps in `train.py` (`iv_train_step`,
+`id_train_step`, `si_train_step`, `sd_train_step`) which build the query-level
+association target and add `L_ass` (+ `L_cons` for text pairs). 
+Runnable end-to-end
+examples are under `tools/smoke_*`:
+
+```bash
+CUDA_VISIBLE_DEVICES=0 python tools/smoke_si_overfit.py   # S-I Assoc Acc 0→100%
+CUDA_VISIBLE_DEVICES=0 python tools/smoke_id_overfit.py   # I-D Assoc Acc 12.5→50%
+```
+
+**Joint (two-stage) training** (`train_joint.py`, `configs/joint.yaml`) — domain-balanced
+joint training over a **union vocabulary** (object/predicate classes merged by name
+across datasets). Single-dataset training above is unchanged.
+
+- **Stage 1** interleaves the 4 single-modality datasets (PSG / PVSG / FACTUAL / 3DDSG)
+  by temperature sampling (weight ∝ size**(1/T)); labels are remapped to the union vocab.
+- **Stage 2** loads the stage-1 checkpoint and trains the 4 cross-modal pairs
+  (I-V / I-D / S-I / S-D) with `L_ass` (+ `L_cons`).
+
+```bash
+conda activate usg
+# both stages (stage 1 -> stage 2); or --stage 1 / --stage 2 individually
+CUDA_VISIBLE_DEVICES=0 python train_joint.py --config configs/joint.yaml --stage both
+CUDA_VISIBLE_DEVICES=0  python train_joint.py --config configs/joint.yaml --stage 2 \
+    --stage1-ckpt checkpoints/joint/stage1.pt
+```
+
+
+####  Inference
+
+Per-line (single-dataset) evaluation:
+
+```bash
+python eval.py --config configs/psg.yaml --ckpt <path> --task sgdet   # R@K / mR@K
+python eval.py --config configs/factual.yaml --ckpt <path>            # Set Match
+```
+
+Joint-model evaluation (one command over every split — R@K/mR@K for image/video/point,
+Set Match for text, Association Accuracy@5 for the four pairs; datasets are remapped to
+the union vocab):
+
+```bash
+CUDA_VISIBLE_DEVICES=0 python eval_joint.py --config configs/joint.yaml \
+    --ckpt checkpoints/joint/stage2.pt
+```
+
+`eval.limit` in the config caps samples per split (set to `null` for full evaluation).
 
 
 
