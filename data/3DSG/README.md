@@ -1,46 +1,128 @@
-# 3DSG
+# 3D Scene Graph (3DSG)
 
-
-## Manual Data Preparation
-
-1. Download [3RScan](https://github.com/WaldJohannaU/3RScan) and [3DSSG](https://3dssg.github.io/). Unpack the image sequences for each scan. And include the 3DSSG files as a subdirectory in 3RScan.
-2. Download [ScanNet](http://www.scan-net.org/ScanNet/) and split the scans into ```scannet_2d``` and ```scannet_3d```. We use the pre-processed data from [ScanNet ETH preprocessed 3D](https://cvg-data.inf.ethz.ch/openscene/data/scannet_processed/scannet_3d.zip) & [ScanNet ETH preprocessed 2D](https://cvg-data.inf.ethz.ch/openscene/data/scannet_processed/scannet_2d.zip), when using the pre-processed version make sure that you have acknowledged the ScanNet license. When using processed ScanNet ETH preprocessed 2D frames, use the matching [intrinsics](https://drive.google.com/drive/folders/1rlzUS1d5cYo5lJCNl1G81x9HmYtn5NB5?usp=drive_link).
-3. Download the [3DSSG_subset.zip](http://campar.in.tum.de/public_datasets/3DSSG/3DSSG_subset.zip) and extract the files in the 3RScan directory for training and evaluation. Additional meta files can be found [here](https://drive.google.com/drive/folders/1rlzUS1d5cYo5lJCNl1G81x9HmYtn5NB5?usp=drive_link).
-4. Download 3RScan & ScanNet meta data files using ```scripts/download_scannet_meta.sh``` and ```scripts/download_scannet_meta.sh``` and place them in their data directories.
-5. Set the path to your data in ```config/config.py```
+This directory contains the 3DSG data used by this project. The data is built from [3DSSG](https://3dssg.github.io/) and [3RScan](https://github.com/WaldJohannaU/3RScan), with helper scripts following the [Open3DSG](https://github.com/boschresearch/Open3DSG) preparation pipeline.
 
 
 
 
-## Auto Preparation
-Download data
-```
-cd files
+
+## Data Sources
+
+- [3DSSG](https://3dssg.github.io/): scene graph annotations, object classes, and relationship labels.
+- [3RScan](https://github.com/WaldJohannaU/3RScan): 3D reconstructed scans and RGB-D image sequences.
+- [3DSSG_subset.zip](http://campar.in.tum.de/public_datasets/3DSSG/3DSSG_subset.zip): subset files for training and evaluation.
+
+
+## Manual Preparation
+
+1. Download [3DSSG](https://3dssg.github.io/) and [3RScan](https://github.com/WaldJohannaU/3RScan).
+2. Unpack the image sequences for each 3RScan scan.
+3. Place the 3DSSG files as a subdirectory inside the 3RScan directory.
+
+
+## Automatic Preparation
+
+Download the metadata files:
+
+```bash
+cd data/3DSG
 bash preparation.sh
 ```
 
+The preparation script downloads:
 
-### Prepare 3RScan dataset
-Please make sure you agree the [3RScan Terms of Use](https://forms.gle/NvL5dvB4tSFrHfQH6) first, and get the download script and put it right at the 3RScan main directory.
+- `rescans.txt`
+- `train_ref.txt`
+- `val_ref.txt`
+- `3RScan.json`
+- `relationships.json`
+- `relationships.txt`
+- `classes160.txt`
+- `references.txt`
 
-Then run
+## Prepare 3RScan
+
+Before running the scripts, agree to the [3RScan Terms of Use](https://forms.gle/NvL5dvB4tSFrHfQH6), get the 3RScan download script, and place `download.py` at the main 3RScan directory.
+
+Then run:
+
+```bash
+cd data/3DSG
+python scripts/RUN_prepare_dataset_3RScan.py \
+  -c <open3dsg_config.yaml> \
+  --download \
+  --thread 8
 ```
-python scripts/RUN_prepare_dataset_3RScan.py --download --thread 8
+
+This step downloads the required 3RScan files, unzips image sequences, generates aligned instance meshes, and prepares rendered views.
+
+
+## Generate Experiment Data
+
+Generate ground-truth data:
+
+```bash
+python scripts/RUN_prepare_GT_setup_3RScan.py \
+  -c <open3dsg_config.yaml> \
+  --thread 16
 ```
 
-### Generate Experiment data
+Generate dense training data:
+
+```bash
+python scripts/RUN_prepare_Dense_setup_3RScan.py \
+  -c <config_base_3RScan_inseg_l20.yaml> \
+  --thread 16
 ```
-# For GT
-# This script downloads preprocessed data for GT data generation, and generate GT data.
-python scripts/RUN_prepare_GT_setup_3RScan.py --thread 16
 
-# For Dense
-# This script downloads the inseg.ply files and unzip them to your 3rscan folder, and 
-generates training data.
-python scripts/RUN_prepare_Dense_setup_3RScan.py -c configs/dataset/config_base_3RScan_inseg_l20.yaml --thread 16
+Generate sparse training data:
 
-# For Sparse
-# This script downloads the 2dssg_orbslam3.[json,ply] files and unzip them to your 3rscan folder, and 
-generates training data.
-python scripts/RUN_prepare_Sparse_setup_3RScan.py -c configs/dataset/config_base_3RScan_orbslam_l20.yaml --thread 16
+```bash
+python scripts/RUN_prepare_Sparse_setup_3RScan.py \
+  -c <config_base_3RScan_orbslam_l20.yaml> \
+  --thread 16
+```
+
+## Expected File Structure
+
+The local `data/3DSG/` directory should be organized as:
+
+```text
+data/3DSG/
+|-- 3DSSG/
+|   |-- affordances.txt
+|   |-- attributes.txt
+|   |-- classes.txt
+|   |-- objects.json
+|   |-- relationships.json
+|   |-- relationships.txt
+|   `-- wordnet_attributes.txt
+|-- 3DSSG_subset/
+|   |-- classes.txt
+|   |-- relationships.json
+|   |-- relationships.txt
+|   |-- relationships_train.json
+|   `-- relationships_validation.json
+|-- 3RScan/
+|   `-- <scan_id>/
+|       |-- labels.instances.annotated.v2.ply
+|       |-- mesh.refined.0.010000.segs.v2.json
+|       |-- mesh.refined.mtl
+|       |-- mesh.refined.v2.obj
+|       |-- mesh.refined_0.png
+|       |-- semseg.v2.json
+|       `-- sequence.zip
+|-- scripts/
+|   |-- RUN_prepare_dataset_3RScan.py
+|   |-- RUN_prepare_GT_setup_3RScan.py
+|   |-- RUN_prepare_Dense_setup_3RScan.py
+|   `-- RUN_prepare_Sparse_setup_3RScan.py
+|-- split/
+|   |-- train_scans.txt
+|   |-- validation_scans.txt
+|   `-- test_scans.txt
+|-- 3RScan.v2 Semantic Classes - Mapping.csv
+|-- intrinsics.txt
+|-- relationships_custom.txt
+`-- preparation.sh
 ```
