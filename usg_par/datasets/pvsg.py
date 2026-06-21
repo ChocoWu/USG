@@ -1,4 +1,4 @@
-"""PVSG (Panoptic Video Scene Graph) dataset for video SGDet (paper Table 3).
+"""PVSG (Panoptic Video Scene Graph) dataset.
 
 Annotation (data/pvsg/pvsg.json):
   objects: {thing: [...115], stuff: [...11]} -> 126 combined object classes.
@@ -7,13 +7,11 @@ Annotation (data/pvsg/pvsg.json):
   data: per-video {video_id, meta{height,width,fps,num_frames}, objects:[{object_id,
         category, is_thing}], relations:[[sub_id, obj_id, predicate_name, [[s,e],...]]]}.
 
-On disk: <data_root>/<SourceDir>/masks/<video_id>/<frame:04d>.png (single-channel
-object-id maps; pixel == object_id, 0 == background) and .../videos/<video_id>.mp4.
 
-A relation holds on frame f iff some span [s,e] covers f. We sample T frames per
+A relation holds on frame f iff some span [s,e] covers f. 
+We sample T frames per
 video and turn each into a per-frame scene graph (labels + masks + intra-frame
-relations), so video training reuses the per-frame (image) machinery; the temporal
-encoder links frames' object queries in the model.
+relations).
 """
 
 import json

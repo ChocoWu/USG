@@ -1,12 +1,5 @@
 """Unified (union) vocabulary across datasets for joint multi-modal training.
 
-Stage-1 joint training interleaves the four single-modality datasets (PSG image,
-PVSG video, FACTUAL text, 3DDSG point). Their object/predicate label spaces differ,
-so we build a single **union vocabulary** (classes merged by name — identical names
-across datasets share one id) plus per-source remap tables, and remap each sample's
-labels/relations to the union space at load time. Open-vocab cosine classification
-means the union just sizes the class-name embedding set; the relation head is a
-Linear over the union predicate count.
 """
 
 from dataclasses import dataclass, field

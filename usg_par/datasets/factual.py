@@ -1,14 +1,12 @@
-"""FACTUAL text scene-graph dataset (paper Table 5; text SGDet).
+"""FACTUAL text scene-graph dataset.
 
-CSV columns: image_id, region_id, caption, scene_graph. The scene_graph string is a
+CSV columns: image_id, region_id, caption, scene_graph. 
+The scene_graph string is a
 list of triplets ``( subject , predicate , object )`` joined by ` , `; attributes are
-encoded as ``( entity , is , attribute )``. Text SG objects are defined by category
+encoded as ``( entity , is , attribute )``. 
+Text SG objects are defined by category
 label only (no masks) -> the detection head/loss use the text (mask-free) path.
 
-We build object/predicate vocabularies from the training split (paper: ~4042 object
-classes, ~1607 predicates). Each caption -> CLIP token ids; each scene_graph ->
-unique entities (object labels) + relations (sub_local, obj_local, predicate_id).
-The raw name-triplets are kept for Set-Match evaluation.
 """
 
 import csv

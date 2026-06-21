@@ -2,8 +2,7 @@
 
 Each scan's ``labels.instances.annotated.v2.ply`` stores per-vertex:
   x, y, z, red, green, blue, objectId (instance id), globalId (class id 1..527),
-  NYU40, Eigen13, RIO27. We use it as the GT-segmented point cloud: xyz+rgb is the
-  point-cloud input D, objectId gives GT instance masks, globalId the per-point class.
+  NYU40, Eigen13, RIO27. 
 """
 
 import os

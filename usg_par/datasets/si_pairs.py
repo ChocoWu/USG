@@ -1,13 +1,6 @@
-"""Text-Image (S-I) cross-modal pairs from PSG images + COCO captions (Table 6).
+"""Text-Image (S-I) cross-modal pairs.
 
-Image side = a PSG image (objects with labels/masks). Text side = a COCO caption for
-the same image, parsed into a scene graph (SceneGraphParser) whose entities are
-aligned to PSG's 133 object classes and predicates to PSG's 56 relations. The
-cross-modal association is category-level (the paper's "label matching"): a text
-entity associates to image objects of the same class (no instance grounding -> weak,
-one-to-many; instance-level would need Grounded-SAM).
 
-Pairing recipes (image_id + caption) are stored under data/multimodal/S-I/.
 """
 
 import json

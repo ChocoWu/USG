@@ -1,13 +1,6 @@
-"""Text-3D (S-D) cross-modal pairs from 3RScan scene captions + 3DSSG scene graph.
+"""Text-3D (S-D) cross-modal pairs.
 
-3D side = a 3RScan point cloud + 3DSSG objects/relations (same base as 3DDSG/I-D).
-Text side = a natural-language scene caption (data/multimodal/3RScan/.../scene_cap.json,
-GPT-generated) parsed into a scene graph whose entities are aligned to 3DSSG's 528
-object classes. Cross-modal association is category-level (text entity <-> 3D object
-of the same class), analogous to S-I.
 
-Note: the paper's S-D uses ScanRefer/ScanNet; here we have captions for 3RScan
-directly, so S-D shares the same 3D base as 3DDSG (no ScanNet mismatch).
 """
 
 import json

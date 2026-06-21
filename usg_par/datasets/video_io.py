@@ -1,4 +1,4 @@
-"""Video frame reading for PVSG (decode specific frame indices from an mp4).
+"""Video frame reading for PVSG.
 
 Uses PyAV. ``av_frame_reader`` matches the ``frame_reader`` signature expected by
 PVSGDataset: ``(video_path, frame_idxs, preprocess) -> (T, 3, H, W)``.

@@ -1,4 +1,4 @@
-"""PSG (Panoptic Scene Graph) dataset loader for the image SGDet task (Table 2).
+"""PSG (Panoptic Scene Graph) dataset loader for the image SGDet task.
 
 Annotation format (data/psg/psg.json):
   data: per-image list; each item has file_name, pan_seg_file_name, height, width,
@@ -8,9 +8,6 @@ Annotation format (data/psg/psg.json):
   ALREADY the combined 0..132 index. predicate_classes: 56.
   Split: image_id in test_image_ids -> test, else train.
 
-Image data lives in coco.zip (extract to data/psg/coco -> train2017/, panoptic_train2017/).
-If the image root is absent the dataset runs in annotation-only mode (image/masks None),
-which is enough to test target construction.
 """
 
 import json

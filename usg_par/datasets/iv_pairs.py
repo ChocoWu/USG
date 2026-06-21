@@ -1,7 +1,8 @@
-"""Image-Video (I-V) cross-modal pairs from PVSG (paper Table 6, appendix E.1.2).
+"""Image-Video (I-V) cross-modal pairs from PVSG.
 
 Construction (paper): the first frame of each video is the paired *image*; a
-temporally non-adjacent segment is the paired *video*. The cross-modal association
+temporally non-adjacent segment is the paired *video*. 
+The cross-modal association
 is free — both views share PVSG's per-object ``object_id``, so image object i is
 associated with video object j iff they have the same object_id.
 

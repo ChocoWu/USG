@@ -2,8 +2,8 @@
 
 A 3D object is "grounded" in a frame iff its points land on the visible surface
 (projected depth ~ measured depth), giving the cross-modal association by shared
-object_id. Reads color/depth/pose/intrinsics straight from each scan's sequence.zip.
-Alignment verified: median projected-vs-measured depth error ~6-7cm on good frames.
+object_id. 
+Reads color/depth/pose/intrinsics straight from each scan's sequence.zip.
 """
 
 import io
