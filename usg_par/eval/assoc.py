@@ -1,7 +1,6 @@
 """Association Accuracy@K for cross-modal object alignment.
 
-For each object in modality A that has a GT cross-modal counterpart in B, check whether the counterpart is among the top-K highest-scored associations predicted by
-the Object Associator. 
+For each object in modality A that has a GT cross-modal counterpart in B, check whether the counterpart is among the top-K highest-scored associations predicted by the Object Associator. 
 Acc@K = fraction of such A-objects ranked correctly.
 
 Works at the query level: A_pred / A_gt are (N, N) over the two modalities' queries (A_gt comes from build_association_targets — the GT object_id correspondence mapped through each modality's Hungarian matching).
