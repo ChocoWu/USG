@@ -1,5 +1,5 @@
 # Two-stage joint training (paper-style domain-balanced joint training).
-#   Stage 1: interleave the 4 single-modality datasets over the UNION vocab.
+#   Stage 1: interleave the 4 single-modality datasets.
 #   Stage 2: load the stage-1 checkpoint, train on the 4 multimodal pairs.
 # Single-dataset training (configs/{psg,pvsg,3ddsg,factual}.yaml) is unchanged.
 
