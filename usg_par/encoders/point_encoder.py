@@ -1,15 +1,9 @@
 """Point Encoder + Point Decoder, Point-BERT PointTransformer style.
 
 Encoder (Point-BERT, https://github.com/Julie-tang00/Point-BERT):
-  Group (FPS centers + KNN neighborhoods) -> mini-PointNet Encoder -> super-point
-  tokens; a transformer with a positional embedding from the center coordinates
-  refines them. Config (PointTransformer_8192point.yaml): num_group=512,
-  group_size=32, encoder_dims=256, trans_dim=384, depth=12, num_heads=6.
+  Group (FPS centers + KNN neighborhoods) -> mini-PointNet Encoder -> super-point tokens; a transformer with a positional embedding from the center coordinates refines them. 
 
-Decoder (paper: "hierarchical propagation strategy with distance-based
-  interpolation, producing multi-scale point features {H_D}_3, i=3 = original
-  points"): PointNet++ feature-propagation — 3-NN inverse-distance interpolation
-  from super-points to progressively finer point sets, 3 scales (coarse->fine).
+Decoder: PointNet++ feature-propagation — 3-NN inverse-distance interpolation from super-points to progressively finer point sets, 3 scales (coarse->fine).
 
 """
 
