@@ -141,13 +141,7 @@ CUDA_VISIBLE_DEVICES=0 python train.py --config configs/factual.yaml  # text
 Cross-modal training uses dedicated steps in `train.py` (`iv_train_step`,
 `id_train_step`, `si_train_step`, `sd_train_step`) which build the query-level
 association target and add `L_ass` (+ `L_cons` for text pairs). 
-Runnable end-to-end
-examples are under `tools/smoke_*`:
 
-```bash
-CUDA_VISIBLE_DEVICES=0 python tools/smoke_si_overfit.py   # S-I Assoc Acc 0→100%
-CUDA_VISIBLE_DEVICES=0 python tools/smoke_id_overfit.py   # I-D Assoc Acc 12.5→50%
-```
 
 **Joint (two-stage) training** (`train_joint.py`, `configs/joint.yaml`) — domain-balanced
 joint training over a **union vocabulary** (object/predicate classes merged by name
