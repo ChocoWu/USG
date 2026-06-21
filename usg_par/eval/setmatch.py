@@ -1,7 +1,6 @@
 """Set Match metric for text scene-graph parsing.
 
-Set Match = fraction of captions whose predicted triplet SET exactly equals the GT
-triplet set (order-independent, normalized by lowercasing/stripping).
+Set Match = fraction of captions whose predicted triplet SET exactly equals the GT triplet set (order-independent, normalized by lowercasing/stripping).
 """
 
 from typing import List, Optional, Tuple
