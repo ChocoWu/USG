@@ -1,12 +1,5 @@
-"""Factory helpers to build the shared OpenCLIP model (text + image towers).
+"""Factory helpers to build the shared OpenCLIP model.
 
-Loading priority:
-  1. the local snapshot checkpoint under ``checkpoints/openclip/CLIP-convnext_large_d_320``
-     (offline, no network) if present;
-  2. otherwise download the pretrained tag into ``checkpoints/openclip`` (cached).
-
-The text and image encoders share a single OpenCLIP model so their embedding spaces
-stay aligned (needed for open-vocabulary cosine classification).
 """
 
 import os

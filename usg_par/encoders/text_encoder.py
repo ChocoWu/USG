@@ -1,9 +1,5 @@
-"""Text Encoder (paper §3.1): OpenCLIP text tower.
+"""Text Encoder: OpenCLIP text tower.
 
-Produces token-level contextualized features H_S (used as keys/values in the shared
-mask decoder and as context in the relation decoder), and pooled class-name
-embeddings for the open-vocabulary category/predicate classifiers. All features are
-projected to the common d-dim space.
 """
 
 from typing import Optional, Tuple

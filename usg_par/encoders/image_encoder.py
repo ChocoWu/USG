@@ -1,14 +1,4 @@
-"""Image / Video Encoder (paper §3.1): frozen CLIP-ConvNeXt-L backbone + pixel decoder.
-
-The ConvNeXt-L trunk (frozen) yields multi-scale feature maps; the pixel decoder
-fuses them into 3 common-dim scales plus a high-resolution per-pixel embedding
-(H_3) for mask prediction.
-
-Portability note: Mask2Former's pixel decoder uses CUDA MSDeformAttn, which is not
-available on CPU/MPS. We implement a deformable-free multi-scale transformer
-encoder (standard self-attention over flattened multi-scale tokens with 2D sine
-positional + level embeddings). Swap in the real MSDeformAttn decoder on CUDA.
-Recorded as a CLAUDE.md decision.
+"""Image / Video Encoder: frozen CLIP-ConvNeXt-L backbone + pixel decoder.
 """
 
 import math

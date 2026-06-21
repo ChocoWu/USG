@@ -1,4 +1,4 @@
-"""Point Encoder + Point Decoder (paper §3.1), Point-BERT PointTransformer style.
+"""Point Encoder + Point Decoder, Point-BERT PointTransformer style.
 
 Encoder (Point-BERT, https://github.com/Julie-tang00/Point-BERT):
   Group (FPS centers + KNN neighborhoods) -> mini-PointNet Encoder -> super-point
@@ -11,9 +11,6 @@ Decoder (paper: "hierarchical propagation strategy with distance-based
   points"): PointNet++ feature-propagation — 3-NN inverse-distance interpolation
   from super-points to progressively finer point sets, 3 scales (coarse->fine).
 
-Portability: Point-BERT's fps/knn use CUDA ops; we use pure-PyTorch FPS and KNN
-(O(N^2) KNN via cdist) so it runs on CPU/MPS. RGB (input dim 6) is grouped
-alongside xyz and fed to the encoder. Recorded as a CLAUDE.md decision.
 """
 
 from typing import List, Optional, Tuple
