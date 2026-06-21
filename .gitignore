@@ -1,0 +1,45 @@
+# ---- OS / editor ----
+.DS_Store
+**/.DS_Store
+.idea/
+.vscode/
+
+# ---- Python ----
+__pycache__/
+*.py[cod]
+*.egg-info/
+.ipynb_checkpoints/
+.pytest_cache/
+.venv/
+venv/
+
+# ---- Training artifacts ----
+*.ckpt
+*.pth
+*.pt
+checkpoints/
+outputs/
+logs/
+wandb/
+
+# ---- Large raw datasets (keep repo-tracked READMEs / scripts / small annotations) ----
+# big archives & partial downloads
+data/**/*.zip
+data/**/*.crdownload
+data/OneDrive_*.zip
+# raw media
+data/**/*.mp4
+data/**/*.mkv
+data/**/*.avi
+# heavy local data trees / json blobs (not tracked by the upstream repo)
+data/pvsg/Ego4D/
+data/pvsg/EpicKitchen/
+data/pvsg/VidOR/
+data/pvsg/pvsg.json
+data/psg/psg.json
+data/psg/psg_train_val.json
+data/psg/psg_val_test.json
+data/psg/tiny_psg.json
+
+# ---- scratch ----
+usg_text.txt
