@@ -47,12 +47,12 @@ The five modules map to the code as follows:
 | Paper module | Code |
 | --- | --- |
 | Modality-specific encoders | `usg_par/encoders/` (`text_encoder.py`, `image_encoder.py`, `point_encoder.py`) |
-| Shared mask decoder (+ `F_temp`) | `usg_par/mask_decoder.py` |
+| Shared mask decoder | `usg_par/mask_decoder.py` |
 | Object associator | `usg_par/associator.py` |
 | Detection head | `usg_par/detection_head.py` |
 | Relation proposal constructor | `usg_par/rpc.py` |
 | Relation decoder | `usg_par/relation_decoder.py` |
-| Losses `L_obj/L_ass/L_rel/L_cons` | `usg_par/losses.py`, `usg_par/training/` |
+| Losses | `usg_par/losses.py`, `usg_par/training/` |
 | Assembly | `usg_par/model.py` (`USGParCore` + `USGPar`) |
 
 
