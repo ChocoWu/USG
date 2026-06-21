@@ -1,11 +1,7 @@
 """FACTUAL text scene-graph dataset.
 
 CSV columns: image_id, region_id, caption, scene_graph. 
-The scene_graph string is a
-list of triplets ``( subject , predicate , object )`` joined by ` , `; attributes are
-encoded as ``( entity , is , attribute )``. 
-Text SG objects are defined by category
-label only (no masks) -> the detection head/loss use the text (mask-free) path.
+The scene_graph string is a list of triplets ``( subject , predicate , object )`` joined by ` , `; attributes are encoded as ``( entity , is , attribute )``. 
 
 """
 

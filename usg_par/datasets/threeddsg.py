@@ -1,16 +1,12 @@
 """3DDSG (3DSSG-on-3RScan) point-cloud scene-graph dataset.
 
-Per scan we read the annotated point cloud (xyz+rgb + per-point instance/class ids,
-see scan3rscan.py), subsample to a fixed number of points, and build:
+Per scan we read the annotated point cloud (xyz+rgb + per-point instance/class ids, see scan3rscan.py), subsample to a fixed number of points, and build:
   points     (N, 6)   xyz (normalized) + rgb           -> point-cloud input D
   gt_labels  (M,)     object class ids (global_id - 1)  -> open-vocab via class names
   gt_masks   (M, N)   per-point instance masks          -> 3D instance masks mi
   relations  (R, 3)   (sub_local, obj_local, pred_id-1) -> intra-3D triplets
 
-Object/relation vocab come from 3DSSG classes.txt (527) / relationships.txt (40,
-"none" + 39 predicates).
- This is the GT setup (GT instance segmentation), matching
-the SGCls/PreCls tasks in Table 4.
+Object/relation vocab come from 3DSSG classes.txt / relationships.txt.
 """
 
 import json

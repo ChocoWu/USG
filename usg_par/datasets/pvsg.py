@@ -9,9 +9,7 @@ Annotation (data/pvsg/pvsg.json):
 
 
 A relation holds on frame f iff some span [s,e] covers f. 
-We sample T frames per
-video and turn each into a per-frame scene graph (labels + masks + intra-frame
-relations).
+We sample T frames per video and turn each into a per-frame scene graph (labels + masks + intra-frame relations).
 """
 
 import json

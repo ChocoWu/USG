@@ -1,13 +1,8 @@
 """Image-3D (I-D) cross-modal pairs from 3DSSG/3RScan.
 
-Each pair = a 3D scene (3RScan point cloud) + a 2D image view (a sequence frame of
-the same scan). 
-A 3D object is "grounded" in the image iff it projects onto the
-visible depth surface (scan_projection.visible_object_masks), so the cross-modal
-association is free: image object i <-> 3D object j iff they share object_id.
+Each pair = a 3D scene (3RScan point cloud) + a 2D image view (a sequence frame of the same scan). 
+A 3D object is "grounded" in the image iff it projects onto the visible depth surface (scan_projection.visible_object_masks), so the cross-modal association is free: image object i <-> 3D object j iff they share object_id.
 
-A pairing recipe (scan_id, frame) is stored under data/multimodal/I-D/; the point
-cloud, image, masks and association are derived on the fly.
 """
 
 import json

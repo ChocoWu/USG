@@ -1,13 +1,8 @@
 """Image-Video (I-V) cross-modal pairs from PVSG.
 
-Construction (paper): the first frame of each video is the paired *image*; a
-temporally non-adjacent segment is the paired *video*. 
-The cross-modal association
-is free — both views share PVSG's per-object ``object_id``, so image object i is
-associated with video object j iff they have the same object_id.
+Construction: the first frame of each video is the paired *image*; a temporally non-adjacent segment is the paired *video*. 
+The cross-modal association is free — both views share PVSG's per-object ``object_id``, so image object i is associated with video object j iff they have the same object_id.
 
-A pairing "recipe" (which frames) is stored as JSON under data/multimodal/I-V/;
-RGB frames + masks are read on the fly from the existing PVSG data.
 """
 
 import json

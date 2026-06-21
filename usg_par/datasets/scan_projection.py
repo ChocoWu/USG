@@ -1,8 +1,6 @@
 """Project a 3RScan annotated point cloud into its 2D camera frames (for I-D).
 
-A 3D object is "grounded" in a frame iff its points land on the visible surface
-(projected depth ~ measured depth), giving the cross-modal association by shared
-object_id. 
+A 3D object is "grounded" in a frame iff its points land on the visible surface (projected depth ~ measured depth), giving the cross-modal association by shared object_id. 
 Reads color/depth/pose/intrinsics straight from each scan's sequence.zip.
 """
 
